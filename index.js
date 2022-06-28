@@ -1,5 +1,5 @@
 const { readFileSync, writeFile } = require("fs");
-var index = readFileSync("css-generator.html");
+const index = readFileSync("css-generator.html");
 const express = require("express");
 const app = express();
 
@@ -13,6 +13,7 @@ app.get("/", (req, res) => {
 
 app.post("/", (req, res) => {
   let isEmpty = "";
+  let randomName = (Math.random() + 1).toString(36).substring(7);
 
   let dynamicCss = `:root { \n`;
 
@@ -25,7 +26,7 @@ app.post("/", (req, res) => {
 
   dynamicCss += `}`;
 
-  writeFile("variable.css", dynamicCss, (err) => {
+  writeFile(`${randomName}.css`, dynamicCss, (err) => {
     if (err) return res.send("Error");
   });
   return res.send("Success");
